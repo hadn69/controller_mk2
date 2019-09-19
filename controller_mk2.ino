@@ -136,18 +136,14 @@ void display(int speed, int dir, double I)
   for (int i = 0; i < (sizeof(currentArray) / sizeof(currentArray[0])); i++)
   {
     tempCurrent = tempCurrent + currentArray[i];
-    if (i == 19)
-    {
-      //more magic numbers
-      tempCurrent = tempCurrent / 20;
-    }
   }
+  //magic
+  tempCurrent = tempCurrent / 20;
   //formating and display
   if (tempCurrent < 0.2)
   {
     tempCurrent = 0.0;
   }
   displayA.print(tempCurrent, 1);
-  displayA.print(" ");
   displayA2.println("A");
 }
