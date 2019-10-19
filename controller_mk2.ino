@@ -5,20 +5,21 @@
 #include <LedPrintJustifiable.h>
 
 //Global Variables
-int throttle = A5;
+int throttle = A0;
 int mom = A4;
+int currentSense = A3;
 int tempSpeed = 0;
-int direction = 0;
+int direction = 12;
 int lastDir = 0;
 double currentArray[20];
 
 //devices
-ACS712 sensor(ACS712_30A, A15);
+ACS712 sensor(ACS712_30A, currentSense);
 CytronMD motor(PWM_DIR, 3, 2); // PWM = Pin 3, DIR = Pin 2.
 LedPrintJustifiable myLed = LedPrintJustifiable(
-    22, // DATA PIN
-    24, // CLOCK PIN
-    26, // CS PIN
+    19, // DATA PIN
+    20, // CLOCK PIN
+    21, // CS PIN
     8,  // NUMBER OF DIGITS
     1   // Orientation 0/1, if it looks backwards try the other
 );
@@ -65,16 +66,16 @@ void loop()
 void run(int speed, int dir)
 {
   //motor control
-  if (abs(tempSpeed - speed) > 30)
-  {
-    //get major speed change
-    tempSpeed = speed;
-  }
-  else if (speed < 30)
+  if (speed < 30)
   {
     //reasonable 0 point?
     tempSpeed = 0;
     speed = 0;
+  }
+  else if (abs(tempSpeed - speed) > 30)
+  {
+    //get major speed change
+    tempSpeed = speed;
   }
   else
   {
