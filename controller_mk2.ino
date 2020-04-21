@@ -49,14 +49,28 @@ void setup()
   //magic numbers
   displayA.justify(-1);
   displayB.justify(1);
+  
+  //serial debug
+  Serial.begin(9600);
+  Serial.println("Init Finish");
 }
 
 void loop()
 {
-  //temp sensor reads
+  //sensor reads
   double current = sensor.getCurrentDC();
   int throttlePosition = analogRead(throttle);
   int directionPosition = digitalRead(direction);
+
+  //Serial Debug
+  Serial.print("Speed: ");
+  Serial.println(throttlePosition);
+
+  Serial.print("DIR: ");
+  Serial.println(directionPosition);
+
+  Serial.print(current);
+  Serial.println("A");
 
   //execute
   run(throttlePosition, directionPosition);
